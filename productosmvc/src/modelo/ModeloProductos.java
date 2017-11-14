@@ -69,6 +69,36 @@ public class ModeloProductos {
 		}
 	}
 
+	public Producto consultaProducto(String codigo) {
+		Producto producto=null;
+		String codigoArt=codigo;
+		try {
+			con=origenDatos.getConnection();
+			String sql="select * from productos where codigoarticulo=?";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setString(1, codigoArt);
+			ResultSet rs=ps.executeQuery();
+			if(rs.next()) {
+				producto=new Producto(rs.getString("codigoarticulo")
+						, rs.getString("seccion")
+						, rs.getString("nombrearticulo")
+						, rs.getDouble("precio")
+						, rs.getDate("fecha"),
+						rs.getBoolean("importado")
+						, rs.getString("paisdeorigen"));
+			}else {
+				throw new Exception("Articulo no encontrado codigo articulo: "+codigoArt);
+				
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return producto;
+		
+		
+	}
+
 	
 	
 	

@@ -62,6 +62,16 @@ public class ControladorProductos extends HttpServlet {
 		case "insertarBBDD":
 			insertarProducto(request, response);
 			break;
+		case "cargar":
+			
+			try {
+				cargaProductos(request,response);
+			} catch (Exception e) {
+				
+				System.out.println(e);
+			}
+			
+			break;
 			
 		default:
 			
@@ -72,6 +82,18 @@ public class ControladorProductos extends HttpServlet {
 		
 		
 
+	}
+
+	private void cargaProductos(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		//leer el codigo del articulo que viene en el request
+		String codigo=request.getParameter("codigoArticulo");
+		//Comunicar codigo art al modelo para obtener la info del producto
+		Producto producto=mp.consultaProducto(codigo);
+		//Colocar atributo correspondiente al codigo art
+		request.setAttribute("codigoArticulo", producto);
+		//Envia la info al formulario de actualizar(jsp)
+		RequestDispatcher rd=request.getRequestDispatcher("/actualizarProducto.jsp");
+		rd.forward(request, response);
 	}
 
 	private void insertarProducto(HttpServletRequest request, HttpServletResponse response) {

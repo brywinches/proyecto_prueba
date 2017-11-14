@@ -46,7 +46,7 @@
 		<!-- Link para cada producto con su codigo -->
 		<c:url var="linkTemp" value="ControladorProductos">
 		<c:param name="instruccion" value="cargar"></c:param>
-		<c:param name="CArticulo" value="${e.codArticulo}"></c:param>
+		<c:param name="codigoArticulo" value="${e.codArticulo}"></c:param>
 		</c:url>
 		
 			<tr>
