@@ -99,7 +99,46 @@ public class ModeloProductos {
 		
 	}
 
+	public void actualizaProducto(Producto producto) {
+		try {
+			con=origenDatos.getConnection();
+			if(con!=null) {
+				System.out.println("conexion correcta");
+			}
+			String sql="update productos set seccion=?, nombrearticulo=?, precio=?, fecha=?, "
+					+ "importado=?, paisdeorigen=? where codigoarticulo=? ";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setString(1, producto.getSeccion());
+			ps.setString(2, producto.getNomArticulo());
+			ps.setDouble(3, producto.getPrecio());
+			java.util.Date utilDate=producto.getFecha();
+			java.sql.Date fechaSql=new java.sql.Date(utilDate.getTime()); 
+			ps.setDate(4, fechaSql);
+			ps.setBoolean(5, producto.isImportado());
+			ps.setString(6, producto.getPaisOrigen());
+			ps.setString(7, producto.getCodArticulo());
+			ps.execute();
+			System.out.println("actualizacion correcta");
+		
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	
+	}
+
+	public void eliminarProducto(String codigo) {
+		String codigoArt=codigo;
+		try {
+			con=origenDatos.getConnection();
+			String sql="delete from productos where codigoarticulo=?";
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.setString(1, codigoArt);
+			ps.executeUpdate();
+			System.out.println("Articulo eliminado");			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+	}
 	
 	
 }

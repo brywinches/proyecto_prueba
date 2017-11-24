@@ -40,12 +40,18 @@
 				<th>Precio</th>
 				<th>Importado</th>
 				<th>Pais de origen</th>
+				
 			</tr>
 		</thead>
 		<c:forEach var="e" items="${listaProductos}">
-		<!-- Link para cada producto con su codigo -->
-		<c:url var="linkTemp" value="ControladorProductos">
+		<!-- Link para modificar cada producto con su codigo -->
+		<c:url var="linkModificar" value="ControladorProductos">
 		<c:param name="instruccion" value="cargar"></c:param>
+		<c:param name="codigoArticulo" value="${e.codArticulo}"></c:param>
+		</c:url>
+		<!-- Link para modificar cada producto con su codigo -->
+		<c:url var="linkEliminar" value="ControladorProductos">
+		<c:param name="instruccion" value="eliminar"></c:param>
 		<c:param name="codigoArticulo" value="${e.codArticulo}"></c:param>
 		</c:url>
 		
@@ -57,7 +63,8 @@
 				<td>${e.fecha}</td>
 				<td>${e.importado}</td>
 				<td>${e.paisOrigen}</td>
-				<td><a href="${linkTemp}">Modificar</a></td>
+				<td><a href="${linkModificar}">Modificar</a></td>
+				<td><a href="${linkEliminar}">Eliminar</a></td>
 			</tr>
 		</c:forEach>
 	</table>
